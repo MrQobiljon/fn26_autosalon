@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from rest_framework import generics
+from rest_framework import mixins
 
 from django.forms import model_to_dict
 
@@ -11,6 +12,39 @@ from .models import Car, Brand
 from .serializers import CarSerializer
 from .permissions import CarPermission
 
+
+class CarAPIView(generics.ListCreateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+
+class CarDetailApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+    lookup_url_kwarg = "car_id"
+    lookup_field = "pk"
+
+
+    # def get_object(self):
+    #     pk = self.kwargs.get("car_id")
+    #     return Car.objects.get(pk=pk)
+
+
+
+
+# class CarCreateAPIView(generics.CreateAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
+#
+#
+# class CarUpdateAPIView(generics.UpdateAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
+#
+#
+# class CarDeleteAPIView(generics.DestroyAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
 
 
 
